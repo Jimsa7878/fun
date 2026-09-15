@@ -4,11 +4,11 @@ import './styles.css';
 
 const CATEGORIES = ['SONG TITLE', 'EXACT YEAR', 'ARTIST / BAND', 'DECADE', 'YEAR +/- 3'];
 const CATEGORY_DETAILS = {
-  'SONG TITLE': { icon: '♫', color: 'coral' },
-  'EXACT YEAR': { icon: '#', color: 'gold' },
-  'ARTIST / BAND': { icon: '★', color: 'pink' },
-  DECADE: { icon: '◉', color: 'blue' },
-  'YEAR +/- 3': { icon: '±', color: 'violet' }
+  'SONG TITLE': { icon: '♫', color: 'green' },
+  'EXACT YEAR': { icon: '#', color: 'pink' },
+  'ARTIST / BAND': { icon: '★', color: 'yellow' },
+  DECADE: { icon: '◉', color: 'purple' },
+  'YEAR +/- 3': { icon: '±', color: 'blue' }
 };
 const DEFAULT_DURATION = 45;
 
