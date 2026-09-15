@@ -156,6 +156,7 @@ function App() {
           {categoryText}
         </div>
         <div className={`disco-ball ${phase === 'done' ? 'disco-ball--done' : ''}`}>
+          <img className="disco-ball-image" src="./discoball.gif" alt="Spinning silver disco ball" />
           <div className={`timer ${phase === 'running' && remaining <= 10 ? 'timer--warning' : ''} ${phase === 'done' ? 'timer--done' : ''} ${countdown ? 'timer--countdown' : ''}`}>
             {countdown ?? remaining}
           </div>
