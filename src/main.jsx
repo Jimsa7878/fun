@@ -3,6 +3,13 @@ import { createRoot } from 'react-dom/client';
 import './styles.css';
 
 const CATEGORIES = ['SONG TITLE', 'EXACT YEAR', 'ARTIST / BAND', 'DECADE', 'YEAR +/- 3'];
+const CATEGORY_DETAILS = {
+  'SONG TITLE': { icon: '♫', color: 'coral' },
+  'EXACT YEAR': { icon: '#', color: 'gold' },
+  'ARTIST / BAND': { icon: '★', color: 'pink' },
+  DECADE: { icon: '◉', color: 'blue' },
+  'YEAR +/- 3': { icon: '±', color: 'violet' }
+};
 const DEFAULT_DURATION = 45;
 
 function playTone(frequency, duration = 100) {
@@ -126,6 +133,7 @@ function App() {
   };
 
   const categoryText = phase === 'done' ? "TIME'S UP!" : category;
+  const categoryInfo = CATEGORY_DETAILS[category];
   const statusText = {
     ready: 'Category selected. Start the countdown when you are ready.',
     countdown: 'Get ready...',
@@ -152,8 +160,9 @@ function App() {
 
       <section className="game-panel" aria-live="polite">
         <div className="panel-kicker">Next challenge</div>
-        <div className={`category ${phase === 'done' ? 'category--done' : ''}`}>
-          {categoryText}
+        <div className={`category category--${categoryInfo?.color ?? 'default'} ${phase === 'done' ? 'category--done' : ''}`}>
+          {phase !== 'done' && <span className="category-icon" aria-hidden="true">{categoryInfo?.icon}</span>}
+          <span>{categoryText}</span>
         </div>
         <div className={`disco-ball ${phase === 'done' ? 'disco-ball--done' : ''}`}>
           <img className="disco-ball-image" src="./discoball.gif" alt="Spinning silver disco ball" />

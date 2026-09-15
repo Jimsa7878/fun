@@ -33,12 +33,19 @@ h1 { margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(29
 .duration-control select { min-height: 40px; padding: 0 30px 0 12px; color: var(--ink); border: 1px solid var(--line); border-radius: 8px; background: #241735; color-scheme: dark; }
 .duration-control option { color: var(--ink); background: #241735; }
 
-.game-panel { flex: 1; width: min(900px, 100%); margin: clamp(44px, 11vh, 120px) auto clamp(35px, 8vh, 90px); padding: clamp(32px, 7vw, 72px) clamp(18px, 6vw, 70px); text-align: center; border: 1px solid rgba(255,255,255,.22); border-radius: 18px; background: linear-gradient(135deg, rgba(255,79,163,.13), rgba(255,255,255,.055) 42%, rgba(141,107,255,.1)); box-shadow: 0 25px 90px rgba(0,0,0,.42), inset 0 1px rgba(255,255,255,.15); }
+.game-panel { flex: 1; width: min(900px, 100%); margin: clamp(44px, 11vh, 120px) auto clamp(35px, 8vh, 90px); padding: clamp(32px, 7vw, 72px) clamp(18px, 6vw, 70px); text-align: center; border: 1px solid rgba(255,255,255,.2); border-radius: 18px; background: linear-gradient(145deg, rgba(6,7,14,.97), rgba(18,15,29,.98)); box-shadow: 0 25px 90px rgba(0,0,0,.58), inset 0 1px rgba(255,255,255,.12), 0 0 50px rgba(255,79,163,.08); }
 .panel-kicker { color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
-.category { min-height: clamp(78px, 13vw, 140px); margin: 18px 0 2px; display: grid; place-items: center; color: var(--ink); font-family: 'Barlow Condensed', sans-serif; font-size: clamp(52px, 10vw, 118px); font-weight: 800; line-height: .88; letter-spacing: .01em; text-transform: uppercase; text-wrap: balance; text-shadow: 0 3px 0 var(--pink), 0 5px 0 rgba(255,255,255,.04); }
+.category { min-height: clamp(78px, 13vw, 140px); margin: 18px 0 2px; display: flex; align-items: center; justify-content: center; gap: clamp(10px, 2vw, 22px); color: var(--ink); font-family: 'Barlow Condensed', sans-serif; font-size: clamp(52px, 10vw, 118px); font-weight: 800; line-height: .88; letter-spacing: .01em; text-transform: uppercase; text-wrap: balance; text-shadow: 0 3px 0 var(--category-color), 0 5px 0 rgba(255,255,255,.04); }
+.category-icon { display: inline-grid; place-items: center; width: clamp(42px, 7vw, 76px); aspect-ratio: 1; color: var(--category-color); border: 2px solid currentColor; border-radius: 50%; font-family: 'DM Sans', sans-serif; font-size: clamp(23px, 4vw, 42px); line-height: 1; text-shadow: none; box-shadow: 0 0 20px color-mix(in srgb, var(--category-color) 45%, transparent); }
+.category--coral { --category-color: #ff806d; }
+.category--gold { --category-color: #ffe266; }
+.category--pink { --category-color: #ff5eaa; }
+.category--blue { --category-color: #70e1df; }
+.category--violet { --category-color: #ad91ff; }
+.category--default { --category-color: var(--ink); }
 .category--done { color: var(--yellow); animation: pulse .65s ease-in-out infinite alternate; }
 .disco-ball { position: relative; width: clamp(230px, 42vw, 360px); aspect-ratio: 1; margin: 28px auto 8px; display: grid; place-items: center; overflow: hidden; border: 2px solid rgba(255,255,255,.48); border-radius: 50%; background: #9ca7b7; box-shadow: 0 0 0 8px rgba(255,255,255,.035), 0 0 48px rgba(255,226,102,.42), 0 22px 70px rgba(0,0,0,.38); animation: disco-float 4s ease-in-out infinite; }
-.disco-ball-image { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; mix-blend-mode: screen; }
+.disco-ball-image { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; mix-blend-mode: normal; }
 .disco-ball::before { content: ''; position: absolute; z-index: 1; inset: 0; border-radius: 50%; background: radial-gradient(circle at 25% 18%, rgba(255,255,255,.7), transparent 18%), radial-gradient(circle at 75% 82%, rgba(255,79,163,.2), transparent 30%); pointer-events: none; }
 .disco-ball::after { content: ''; position: absolute; z-index: 1; inset: 5%; border-radius: 50%; border: 1px solid rgba(255,255,255,.55); box-shadow: inset 0 0 20px rgba(255,255,255,.3); pointer-events: none; }
 .disco-ball--done { animation: disco-flash .42s ease-in-out infinite alternate; }
