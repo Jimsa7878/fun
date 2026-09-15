@@ -21,7 +21,7 @@ function playTone(frequency, duration = 100) {
       context.close();
     }, duration);
   } catch {
-    // Ljud är en bonus och ska inte stoppa spelet i webbläsare utan AudioContext.
+    // Sound is optional and should not stop the game in browsers without AudioContext.
   }
 }
 
@@ -115,13 +115,13 @@ function App() {
     if (phase === 'ready' || phase === 'paused') setRemaining(nextDuration);
   };
 
-  const categoryText = phase === 'done' ? 'TIME’S UP!' : category || 'TRYCK PÅ NY OMGÅNG';
+  const categoryText = phase === 'done' ? "TIME'S UP!" : category || 'PRESS NEW ROUND';
   const statusText = {
-    ready: 'Kategorin är vald. När ni är redo, starta nedräkningen.',
-    countdown: 'Gör er redo...',
-    running: `Kör! ${duration} sekunder på klockan.`,
-    paused: 'Pausad. Fortsätt när ni är redo.',
-    done: 'Tiden är slut - visa rätt svar!'
+    ready: 'Category selected. Start the countdown when you are ready.',
+    countdown: 'Get ready...',
+    running: `Go! ${duration} seconds on the clock.`,
+    paused: 'Paused. Continue when you are ready.',
+    done: "Time's up - reveal the correct answer!"
   }[phase];
 
   return (
@@ -129,11 +129,11 @@ function App() {
       <header className="topbar">
         <div className="brand-mark" aria-hidden="true">ITC</div>
         <div>
-          <p className="eyebrow">Musikbingo</p>
+          <p className="eyebrow">Disco music bingo</p>
           <h1>Hitster Bingo</h1>
         </div>
         <label className="duration-control">
-          <span>Tid</span>
+          <span>Time</span>
           <select value={duration} onChange={changeDuration} disabled={phase === 'countdown' || phase === 'running'}>
             <option value="30">30 sek</option>
             <option value="45">45 sek</option>
@@ -145,7 +145,7 @@ function App() {
       </header>
 
       <section className="game-panel" aria-live="polite">
-        <div className="panel-kicker">Nästa fråga</div>
+        <div className="panel-kicker">Next challenge</div>
         <div className={`category ${phase === 'done' ? 'category--done' : ''}`}>
           {countdown ? <span className="countdown">{countdown}</span> : categoryText}
         </div>
@@ -156,16 +156,16 @@ function App() {
 
         <div className="controls">
           <button className="button button--primary" onClick={startRound} disabled={phase === 'running' || phase === 'countdown' || phase === 'done'}>
-            {phase === 'paused' ? 'FORTSÄTT' : 'STARTA'}
+            {phase === 'paused' ? 'RESUME' : 'START'}
           </button>
-          <button className="button button--quiet" onClick={pauseRound} disabled={phase !== 'running'}>PAUSA</button>
-          <button className="button button--quiet" onClick={newRound}>NY OMGÅNG</button>
+          <button className="button button--quiet" onClick={pauseRound} disabled={phase !== 'running'}>PAUSE</button>
+          <button className="button button--quiet" onClick={newRound}>NEW ROUND</button>
         </div>
       </section>
 
       <footer className="footer-note">
-        <span>PDF-kategorier från ITC Hitster Bingo</span>
-        <span className="keyboard-note">Mellanslag: starta/pausa · N: ny omgång</span>
+        <span>Categories from the ITC Hitster Bingo PDF</span>
+        <span className="keyboard-note">Space: start/pause · N: new round</span>
       </footer>
     </main>
   );
