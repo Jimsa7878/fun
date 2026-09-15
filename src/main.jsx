@@ -30,8 +30,8 @@ function App() {
   const [remaining, setRemaining] = useState(DEFAULT_DURATION);
   const [countdown, setCountdown] = useState(null);
   const [phase, setPhase] = useState('ready');
-  const [category, setCategory] = useState(null);
-  const lastCategory = useRef(null);
+  const [category, setCategory] = useState(() => CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)]);
+  const lastCategory = useRef(category);
 
   const pickCategory = () => {
     const available = CATEGORIES.filter((item) => item !== lastCategory.current);
@@ -64,21 +64,31 @@ function App() {
 
   useEffect(() => {
     if (phase !== 'countdown') return undefined;
+    if (countdown === 'GO') return undefined;
     const countdownTimer = window.setInterval(() => {
       setCountdown((value) => {
-        if (value <= 1) {
+        if (value === 1) {
           window.clearInterval(countdownTimer);
-          setRemaining(duration);
-          setPhase('running');
-          playTone(1000, 180);
-          return null;
+          playTone(880, 120);
+          return 'GO';
         }
         playTone(660);
         return value - 1;
       });
     }, 1000);
     return () => window.clearInterval(countdownTimer);
-  }, [phase, duration]);
+  }, [phase, countdown]);
+
+  useEffect(() => {
+    if (phase !== 'countdown' || countdown !== 'GO') return undefined;
+    const goTimer = window.setTimeout(() => {
+      setRemaining(duration);
+      setCountdown(null);
+      setPhase('running');
+      playTone(1000, 180);
+    }, 700);
+    return () => window.clearTimeout(goTimer);
+  }, [phase, countdown, duration]);
 
   useEffect(() => {
     if (phase !== 'running') return undefined;
@@ -115,7 +125,7 @@ function App() {
     if (phase === 'ready' || phase === 'paused') setRemaining(nextDuration);
   };
 
-  const categoryText = phase === 'done' ? "TIME'S UP!" : category || 'PRESS NEW ROUND';
+  const categoryText = phase === 'done' ? "TIME'S UP!" : category;
   const statusText = {
     ready: 'Category selected. Start the countdown when you are ready.',
     countdown: 'Get ready...',
@@ -127,19 +137,15 @@ function App() {
   return (
     <main className="app-shell">
       <header className="topbar">
-        <div className="brand-mark" aria-hidden="true">ITC</div>
-        <div>
-          <p className="eyebrow">Disco music bingo</p>
-          <h1>Hitster Bingo</h1>
-        </div>
+        <h1>ITC Hitster Bingo</h1>
         <label className="duration-control">
           <span>Time</span>
           <select value={duration} onChange={changeDuration} disabled={phase === 'countdown' || phase === 'running'}>
-            <option value="30">30 sek</option>
-            <option value="45">45 sek</option>
-            <option value="60">60 sek</option>
-            <option value="75">75 sek</option>
-            <option value="90">90 sek</option>
+            <option value="30">30 seconds</option>
+            <option value="45">45 seconds</option>
+            <option value="60">60 seconds</option>
+            <option value="75">75 seconds</option>
+            <option value="90">90 seconds</option>
           </select>
         </label>
       </header>
@@ -147,10 +153,12 @@ function App() {
       <section className="game-panel" aria-live="polite">
         <div className="panel-kicker">Next challenge</div>
         <div className={`category ${phase === 'done' ? 'category--done' : ''}`}>
-          {countdown ? <span className="countdown">{countdown}</span> : categoryText}
+          {categoryText}
         </div>
-        <div className={`timer ${phase === 'running' && remaining <= 10 ? 'timer--warning' : ''} ${phase === 'done' ? 'timer--done' : ''}`}>
-          {remaining}
+        <div className={`disco-ball ${phase === 'done' ? 'disco-ball--done' : ''}`}>
+          <div className={`timer ${phase === 'running' && remaining <= 10 ? 'timer--warning' : ''} ${phase === 'done' ? 'timer--done' : ''} ${countdown ? 'timer--countdown' : ''}`}>
+            {countdown ?? remaining}
+          </div>
         </div>
         <p className="status">{statusText}</p>
 
@@ -164,7 +172,6 @@ function App() {
       </section>
 
       <footer className="footer-note">
-        <span>Categories from the ITC Hitster Bingo PDF</span>
         <span className="keyboard-note">Space: start/pause · N: new round</span>
       </footer>
     </main>
